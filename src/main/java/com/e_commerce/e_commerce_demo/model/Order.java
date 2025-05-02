@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import java.util.List;
 
 import java.time.LocalDate;
 
@@ -20,10 +21,14 @@ public class Order {
 
     private LocalDate ordered_date;
 
-    private Long totalPrice;
-
     @ManyToOne(cascade = CascadeType.ALL)
     private User user;
+
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> items;
+
+    private double totalAmount;
 
 
 
