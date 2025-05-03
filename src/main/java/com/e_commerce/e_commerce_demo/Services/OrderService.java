@@ -32,6 +32,7 @@ public class OrderService {
     private UserRepository userRepository;
 
     private ProductRepository productRepository;
+
     public OrderDto createOrder(OrderRequest request) {
         Long userId = request.getUserId();
         User user = userRepository.findById(userId)
@@ -107,6 +108,22 @@ public class OrderService {
     public void deleteOrder(Long id){
         Order order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("order not found", HttpStatus.NOT_FOUND));
         orderRepository.delete(order);
+    }
+
+    public List<OrderDto> getOrdersByUserId(Long userId) {
+        // Fetch orders by userId
+        List<Order> orders = orderRepository.findByUserId(userId);
+
+        // Map Order entities to OrderDto
+        return orders.stream()
+                .map(order -> new OrderDto(
+                        order.getId(),
+                        order.getItems().stream()
+                                .map(item -> new OrderItemDto(item.getProducts().getId(), item.getProducts().getName(),item.getQuantity(), item.getProducts().getPrice()))
+                                .collect(Collectors.toList()),
+                                        order.getTotalAmount(),  order.getOrdered_date())
+                )
+                .collect(Collectors.toList());
     }
 
 }
