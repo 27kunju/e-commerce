@@ -82,7 +82,6 @@ public class OrderService {
     }
 
     public OrderDto getOrders(Long id){
-
        Order  order = orderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No order found", HttpStatus.NOT_FOUND));
 
         // Convert each OrderItem to OrderItemDto
