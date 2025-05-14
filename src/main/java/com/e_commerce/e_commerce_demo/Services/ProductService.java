@@ -69,6 +69,12 @@ public class ProductService {
                 .collect(Collectors.toList());
     }
 
+    public void deleteProduct(Long id){
+        Products products = productRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Product not found", HttpStatus.NOT_FOUND));
+        productRepository.delete(products);
+    }
+
 }
 
 

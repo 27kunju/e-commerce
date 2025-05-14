@@ -1,9 +1,6 @@
 package com.e_commerce.e_commerce_demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +24,10 @@ public class Address {
     private String state;
 
     private String country;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")  // optional, can customize column name
+    private User user;
 
     public Address( String street, String pin_code, String state, String country) {
         this.street = street;

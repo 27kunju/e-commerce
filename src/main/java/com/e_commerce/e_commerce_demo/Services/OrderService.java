@@ -75,7 +75,7 @@ public class OrderService {
         return new OrderDto(
                 savedOrder.getId(),
                 savedOrder.getOrdered_date(),
-                savedOrder.getUser(),
+
                 orderItemDtos,
                 savedOrder.getTotalAmount()
         );
@@ -98,7 +98,7 @@ public class OrderService {
         return new OrderDto(
                 order.getId(),
                 order.getOrdered_date(),
-                order.getUser(),
+
                 orderItemDtos,
                 order.getTotalAmount()
         );

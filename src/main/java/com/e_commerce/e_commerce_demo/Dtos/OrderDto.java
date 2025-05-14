@@ -20,8 +20,6 @@ public class OrderDto {
 
     private LocalDateTime orderedDate;
 
-    private User user;
-
     private List<OrderItemDto> items;
 
     private Double totalAmount;

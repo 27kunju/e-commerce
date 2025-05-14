@@ -1,10 +1,13 @@
 package com.e_commerce.e_commerce_demo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,12 +23,17 @@ public class User {
 
     private String name;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    private Address address;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Address> address;
 
     private String phone;
 
-    public User( String name, Address address, String phone) {
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Order> orders;
+
+
+    public User( String name, List<Address> address, String phone) {
         this.name = name;
         this.address = address;
         this.phone = phone;
