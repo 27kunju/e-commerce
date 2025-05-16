@@ -23,12 +23,12 @@ public class Products {
         this.price = price;
         this.category = category;
     }
-
     private String name;
 
     private long price;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
 
 }

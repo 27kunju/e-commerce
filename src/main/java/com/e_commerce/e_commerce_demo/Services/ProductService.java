@@ -25,18 +25,22 @@ public class ProductService {
 
     public ProductDto createProduct(ProductDto productDto) {
         String categoryName = productDto.getCategory().getName();
-        Category category = categoryRepository.findByName(categoryName)
-                .orElseGet(() -> new Category(categoryName)); // create new if not found
 
+        // Find or create + save category
+        Category category = categoryRepository.findByName(categoryName)
+                .orElseGet(() -> categoryRepository.save(new Category(categoryName))); // FIXED here ✅
+
+        // Now create the product with the saved category
         Products product = new Products(productDto.getName(), productDto.getPrice(), category);
         Products savedProduct = productRepository.save(product);
 
-        // Ensure CategoryDto is updated with persisted category (especially if new)
+        // Return the DTO
         Category savedCategory = savedProduct.getCategory();
         CategoryDto categoryDto = new CategoryDto(savedCategory.getId(), savedCategory.getName());
 
         return new ProductDto(savedProduct.getId(), savedProduct.getName(), savedProduct.getPrice(), categoryDto);
     }
+
 
 
     public ProductDto getProduct(Long id) {

@@ -25,10 +25,6 @@ public class Address {
 
     private String country;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")  // optional, can customize column name
-    private User user;
-
     public Address( String street, String pin_code, String state, String country) {
         this.street = street;
         this.pin_code = pin_code;

@@ -25,10 +25,12 @@ public class Order {
 
     private LocalDateTime ordered_date;
 
-    @ManyToOne()
+    @ManyToOne
+    @JoinColumn(name = "user_id") // FK column in 'order_details' table
     private User user;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL,  orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL,  orphanRemoval = true)
+    @JoinColumn(name = "order_id")
     private List<OrderItem> items;
 
     private double totalAmount;

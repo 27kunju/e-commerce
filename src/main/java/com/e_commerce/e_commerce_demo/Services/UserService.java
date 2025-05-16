@@ -3,6 +3,7 @@ package com.e_commerce.e_commerce_demo.Services;
 import com.e_commerce.e_commerce_demo.Dtos.AddressDto;
 import com.e_commerce.e_commerce_demo.Dtos.UserDto;
 import com.e_commerce.e_commerce_demo.Exception.ResourceNotFoundException;
+import com.e_commerce.e_commerce_demo.Repository.AddressRepository;
 import com.e_commerce.e_commerce_demo.Repository.UserRepository;
 import com.e_commerce.e_commerce_demo.model.Address;
 import com.e_commerce.e_commerce_demo.model.User;
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private UserRepository userRepository;
+
+    private AddressRepository addressRepository;
 
     public UserDto createUser(UserDto userDto) {
         // Convert List<AddressDto> to List<Address>
@@ -71,5 +74,10 @@ public class UserService {
     public void deleteUser(Long id){
         User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("user not found", HttpStatus.NOT_FOUND));
         userRepository.delete(user);
+    }
+
+    public void deleteAddress(long id){
+        Address address = addressRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("address id not found", HttpStatus.NOT_FOUND));
+        addressRepository.delete(address);
     }
 }
