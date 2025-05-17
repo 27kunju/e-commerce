@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
+import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -32,18 +33,15 @@ public class OrderControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    // Sample OrderItemDto
     private OrderItemDto getSampleOrderItem() {
-        return new OrderItemDto(1L, "Vallayball", 1L, 100.0);  // You must have this constructor
+        return new OrderItemDto(1L,"Vallaball", 2L, 100.0);
     }
 
-    // Sample OrderDto
     private OrderDto getSampleOrderDto() {
         List<OrderItemDto> items = Collections.singletonList(getSampleOrderItem());
         return new OrderDto(1L, items, 200.0, LocalDateTime.of(2024, 1, 1, 12, 0));
     }
 
-    // Sample OrderRequest
     private OrderRequest getSampleOrderRequest() {
         OrderRequest request = new OrderRequest();
         request.setUserId(1L);
@@ -63,6 +61,8 @@ public class OrderControllerTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
                 .andExpect(content().json(objectMapper.writeValueAsString(response)));
+
+        verify(orderService).createOrder(Mockito.any(OrderRequest.class));
     }
 
     @Test
@@ -74,6 +74,8 @@ public class OrderControllerTest {
         mockMvc.perform(get("/api/v1/order/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(response)));
+
+        verify(orderService).getOrders(1L);
     }
 
     @Test
@@ -83,6 +85,8 @@ public class OrderControllerTest {
         mockMvc.perform(delete("/api/v1/order/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("order deleted successfully"));
+
+        verify(orderService).deleteOrder(1L);
     }
 
     @Test
@@ -94,5 +98,7 @@ public class OrderControllerTest {
         mockMvc.perform(get("/api/v1/order/user/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(response)));
+
+        verify(orderService).getOrdersByUserId(1L);
     }
 }
