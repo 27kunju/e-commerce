@@ -16,4 +16,11 @@ public class ProductDto {
     private Long price;
 
     private CategoryDto category;
+
+    public ProductDto(String name, Long price, CategoryDto category){
+        this.name = name;
+        this.price = price;
+        this.category = category;
+
+    }
 }

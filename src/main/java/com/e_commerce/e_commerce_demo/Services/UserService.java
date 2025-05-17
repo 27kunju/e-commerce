@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,13 +26,16 @@ public class UserService {
 
     public UserDto createUser(UserDto userDto) {
         // Convert List<AddressDto> to List<Address>
-        List<Address> addressList = userDto.getAddress().stream()
-                .map(addrDto -> new Address(
-                        addrDto.getStreet(),
-                        addrDto.getPin_code(),
-                        addrDto.getState(),
-                        addrDto.getCountry()))
-                .collect(Collectors.toList());
+        List<Address> addressList  = new ArrayList<>();
+        if( !userDto.getAddress().isEmpty()) {
+            addressList = userDto.getAddress().stream()
+                    .map(addrDto -> new Address(
+                            addrDto.getStreet(),
+                            addrDto.getPin_code(),
+                            addrDto.getState(),
+                            addrDto.getCountry()))
+                    .collect(Collectors.toList());
+        }
 
         // Create User entity
         User user = new User(userDto.getName(), addressList, userDto.getPhone());

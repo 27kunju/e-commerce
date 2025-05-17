@@ -1,6 +1,5 @@
 package com.e_commerce.e_commerce_demo.Services;
 
-
 import com.e_commerce.e_commerce_demo.Dtos.OrderDto;
 import com.e_commerce.e_commerce_demo.Dtos.OrderItemDto;
 import com.e_commerce.e_commerce_demo.Dtos.OrderRequest;
@@ -16,11 +15,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

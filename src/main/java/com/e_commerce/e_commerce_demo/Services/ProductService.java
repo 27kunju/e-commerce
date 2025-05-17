@@ -28,15 +28,13 @@ public class ProductService {
 
         // Find or create + save category
         Category category = categoryRepository.findByName(categoryName)
-                .orElseGet(() -> categoryRepository.save(new Category(categoryName))); // FIXED here ✅
+                .orElseGet(() -> categoryRepository.save(new Category(categoryName)));
 
         // Now create the product with the saved category
         Products product = new Products(productDto.getName(), productDto.getPrice(), category);
         Products savedProduct = productRepository.save(product);
 
-        // Return the DTO
-        Category savedCategory = savedProduct.getCategory();
-        CategoryDto categoryDto = new CategoryDto(savedCategory.getId(), savedCategory.getName());
+        CategoryDto categoryDto = new CategoryDto(category.getId(), category.getName());
 
         return new ProductDto(savedProduct.getId(), savedProduct.getName(), savedProduct.getPrice(), categoryDto);
     }
